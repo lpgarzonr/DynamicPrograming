@@ -4,25 +4,29 @@ function findCheapestPath(matrix) {
     0,
     0,
     matrix.length - 1,
-    matrix[0].length - 1
+    matrix[0].length - 1,
+    {}
   );
 }
 
-function findCheapestPathRec(matrix, i, j, iEnd, jEnd) {
+function findCheapestPathRec(matrix, i, j, iEnd, jEnd, mem) {
   if (i === iEnd && j === jEnd) {
     return matrix[i][j];
   }
-
+  if (mem[`${i}:${j}`]) {
+    return mem[`${i}:${j}`];
+  }
   const currentCost = matrix[i][j];
   const rightCost =
     j + 1 <= jEnd
-      ? findCheapestPathRec(matrix, i, j + 1, iEnd, jEnd)
+      ? findCheapestPathRec(matrix, i, j + 1, iEnd, jEnd, mem)
       : Infinity;
   const bottomCost =
     i + 1 <= iEnd
-      ? findCheapestPathRec(matrix, i + 1, j, iEnd, jEnd)
+      ? findCheapestPathRec(matrix, i + 1, j, iEnd, jEnd, mem)
       : Infinity;
-  return currentCost + Math.min(rightCost, bottomCost);
+  mem[`${i}:${j}`] = currentCost + Math.min(rightCost, bottomCost);
+  return mem[`${i}:${j}`];
 }
 
 function findCheapestPathMatrix(matrix) {
