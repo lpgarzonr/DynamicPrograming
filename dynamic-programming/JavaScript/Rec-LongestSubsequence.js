@@ -1,20 +1,20 @@
 function getLongestAscSeq(array) {
-  const subSeqs = [];
+  const subSeqsAcc = [];
   for (i = 0; i < array.length; i++) {
     if (i === 0) {
-      subSeqs.push([array[0]]);
+      subSeqsAcc.push([array[0]]);
       continue;
     }
     const prevSubSeq = [];
     for (let j = 0; j < i; j++) {
       if (array[j] <= array[i]) {
-        prevSubSeq.push(subSeqs[j]);
+        prevSubSeq.push(subSeqsAcc[j]);
       }
     }
     const longestPrevSubSeq = getLongestSubSeq(prevSubSeq);
-    subSeqs.push([...longestPrevSubSeq, array[i]]);
+    subSeqsAcc.push([...longestPrevSubSeq, array[i]]);
   }
-  const idxLongestSubSeq = getLongestSubSeq(subSeqs);
+  const idxLongestSubSeq = getLongestSubSeq(subSeqsAcc);
   return idxLongestSubSeq;
 }
 
@@ -29,7 +29,7 @@ console.log(getLongestAscSeq(array));
 /*
 subSeqs[i] will store the longest sub sequence (array) until item i
 to calculate it, we need to iterate over every element before i
-for every item before i, if it is lover than element at i
+for every item before i, if it is lower than element at i
 then we take the subsequence and store it in prevSubSeq
 then we select the longes prev subsequece and append the i
 

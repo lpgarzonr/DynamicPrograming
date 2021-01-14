@@ -18,8 +18,8 @@ function getWords(inputStr, dict, results) {
 }
 /* 
 take inputStr start to take every single letter and concat and check if word is in dictionary
-if so call again the function with input removing the word
-keel also checking bcs can be that other word can be form out of the already found one
+if so call again the function with inputStr removing the found word (recursively)
+keep also checking the rest of the word bcs can be that other word can be form out of the already found one ex cat and cats
 */
 
 const input = "catsanddog"

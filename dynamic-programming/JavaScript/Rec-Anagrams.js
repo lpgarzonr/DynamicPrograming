@@ -14,23 +14,21 @@ function anagrams(str, anagram, used, index) {
     }
 }
 // Mio
-function getAnagrams(str, anagram) {
+function printAnagrams(str, anagram) {
     if (!str.length) {
         console.log(anagram)
     }
     for (let i = 0; i < str.length; i++) {
         // I take every letter of the string and put it in front of anagram
-        // Then i remove it prom the string and get anagrams of the new string
+        // Then i remove it from the string and get anagrams of the new string
         // when the str has no more letters it means that one anagram is done
         const newAnagram = anagram + str[i]
         const newStr = str.slice(0, i) + str.slice(i + 1)
-        getAnagrams(newStr, newAnagram)
+        printAnagrams(newStr, newAnagram)
     }
 }
 
 
-getAnagrams('abcde', '')
-console.log(itera)
+console.log(printAnagrams('abcde', ''))
 
-anagrams('abcde','', {}, 0)
-console.log(counter)
+console.log(anagrams('abcde','', {}, 0))

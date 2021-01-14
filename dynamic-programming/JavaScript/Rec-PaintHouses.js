@@ -1,7 +1,7 @@
 function minCostTopDown(costs, skipColorIdx, houseIdx, mem) {
   const key = `${skipColorIdx}:${houseIdx}`;
-  const isLastHouse = costs.length === houseIdx;
-  if (isLastHouse) {
+  const isAfterLastHouse = costs.length === houseIdx;
+  if (isAfterLastHouse) {
     return 0;
   }
   if (mem[key]) {
@@ -11,13 +11,13 @@ function minCostTopDown(costs, skipColorIdx, houseIdx, mem) {
   const houseCosts = [];
   /**
   houseCosts has all costs of painting current house with each available color
-  plus the rest of the houses, next house cant be painted of the same color as
+  plus the rest of the houses, next house can not be painted of the same color as
   the current so we pass the skipColorIdx
    */
-  for (let c = 0; c < numColors; c++) {
-    if (c !== skipColorIdx) {
+  for (let colorIdx = 0; colorIdx < numColors; colorIdx++) {
+    if (colorIdx !== skipColorIdx) {
       const cost =
-        costs[houseIdx][c] + minCostTopDown(costs, c, houseIdx + 1, mem);
+        costs[houseIdx][colorIdx] + minCostTopDown(costs, colorIdx, houseIdx + 1, mem);
       houseCosts.push(cost);
     }
   }
@@ -29,12 +29,12 @@ function minCostBottomUp(costs) {
   //[h][i] Hold the acc min cost of painting house in index h with color in index c
   const resultsAcc = [];
   const numHouses = costs.length
-  for (let h = 0; h < numHouses; h++) {
+  for (let houseIdx = 0; houseIdx < numHouses; houseIdx++) {
     // Hold all the costs of painting current and previous houses ACC with every available color
     // Solve the problem first for all colors of house zero then all colors of house one (plus min of house 0) then....
     const costsCurrentHouse = [];
     const numOfColors = costs[0].length
-    for (let c = 0; c < numOfColors; c++) {
+    for (let colorIdx = 0; colorIdx < numOfColors; colorIdx++) {
       // For current house, take every available color and compare with the previous house costs (different color than current color because i cant paint 2 consecutive houses with same color)
       // to calculate the min acc value of current house painted with current color -> resultsAcc[h][c]
       // take previous house costs and get the min cost of painting the house with colors different to current color
@@ -43,8 +43,8 @@ function minCostBottomUp(costs) {
       // The last array in resultsAcc will contain the cost of painting last house using every available color
       // taking into account the costs of the previous houses, so the result will be the min for that array
 
-      const minCostPrevHouse = h === 0 ? 0 : getMinPrevHouseIgnoreColor(resultsAcc[h - 1], c);
-      const minVal = minCostPrevHouse + costs[h][c];
+      const minCostPrevHouse = houseIdx === 0 ? 0 : getMinPrevHouseIgnoreColor(resultsAcc[houseIdx - 1], colorIdx);
+      const minVal = minCostPrevHouse + costs[houseIdx][colorIdx];
       costsCurrentHouse.push(minVal);
     }
     resultsAcc.push(costsCurrentHouse);

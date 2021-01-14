@@ -59,7 +59,7 @@ function knapsackTopDownMem(weights, values, capacity, idx, mem) {
 3|
 4|
 
-Maximo valor entre llevar (a) solo los anteriores items o (b)los items anteriores mas el actual 
+Maximo valor entre llevar (a) solo los anteriores items o (b) los items anteriores mas el actual 
 (a) solo los anteriores es el valor en la columna item - 1
 (b) los anteriores es el valor en la columna item - 1 y para sumar el actual debo ir
 a la capacidad actual - el size del item actual 
